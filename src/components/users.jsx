@@ -2,7 +2,7 @@ import React from 'react'
 import User from './user'
 
 
-const Users = ({users}) => {
+const Users = ({users, onDelete}) => {
     return (
         <>
             <table className="table table-hover">
@@ -17,16 +17,11 @@ const Users = ({users}) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map(user => <User key = {user._id} onDelete = {handleDelete} {...user} />)}
+                    {users.map(user => <User key = {user._id} onDelete = {onDelete} {...user} />)}
                 </tbody>
             </table>
         </>
     )
-
-    
-    function handleDelete(id) {
-        document.getElementById(id).remove()
-    }
 }
 
 export default Users

@@ -10,15 +10,14 @@ const App = () => {
     return (
         <>
             <TopMessage value = {users.length} />
-            <Users users = {users} />
+            <Users users = {users} onDelete = {handleDelete} />
         </>
     )
 
 
-    // function handleDelete(id) {
-    //     document.getElementById(id).remove()
-    //     setUsers(users.filter(user => user._id !== id))
-    // }
+    function handleDelete(id) {
+        setUsers(users.filter(user => user._id !== id))
+    }
 }
 
 export default App
