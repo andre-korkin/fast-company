@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import API from '../api'
+import User from './user'
 
 
 const Users = () => {
@@ -34,6 +35,7 @@ const Users = () => {
         if(count === 0) {
             message = 'Никто с тобой не тусанет'
             bg = 'badge bg-danger m-2'
+            document.querySelector('.table').style.display = 'none'
         }
         else if(count === 1) {
             message = '1 человек тусанет с тобой сегодня'
@@ -49,25 +51,30 @@ const Users = () => {
     }
     
     function renderAllUsers() {
+        // return (
+        //     <>
+        //         {users.map(user => renderUser(user))}
+        //     </>
+        // )
         return (
             <>
-                {users.map(user => renderUser(user))}
+                {users.map(user => <User key = {user._id} {...user} />)}
             </>
         )
     }
     
-    function renderUser(user) {
-        return (
-            <tr key={user._id}>
-                <td>{user.name}</td>
-                <td>{renderQualities(user.qualities)}</td>
-                <td>{user.profession.name}</td>
-                <td>{user.completedMeetings}</td>
-                <td>{user.rate}</td>
-                <td><button type="button" className="btn btn-danger" onClick={(event) => handleDelete(event)}>Удалить</button></td>
-            </tr>
-        )
-    }
+    // function renderUser(user) {
+    //     return (
+    //         <tr key={user._id}>
+    //             <td>{user.name}</td>
+    //             <td>{renderQualities(user.qualities)}</td>
+    //             <td>{user.profession.name}</td>
+    //             <td>{user.completedMeetings}</td>
+    //             <td>{user.rate}</td>
+    //             <td><button type="button" className="btn btn-danger" onClick={(event) => handleDelete(event)}>Удалить</button></td>
+    //         </tr>
+    //     )
+    // }
     
     function renderQualities(qualities) {
         return (
