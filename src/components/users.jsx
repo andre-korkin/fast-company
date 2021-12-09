@@ -1,16 +1,10 @@
-import React, {useState} from 'react'
-import API from '../api'
-import TopMessage from './topMessage'
+import React from 'react'
 import User from './user'
 
 
-const Users = () => {
-    const users = API.users.fetchAll()
-    const [count, setCounter] = useState(users.length)
-
+const Users = ({users}) => {
     return (
         <>
-            <TopMessage value = {count} />
             <table className="table table-hover">
                 <thead>
                     <tr>
@@ -32,7 +26,6 @@ const Users = () => {
     
     function handleDelete(id) {
         document.getElementById(id).remove()
-        setCounter(count - 1)
     }
 }
 

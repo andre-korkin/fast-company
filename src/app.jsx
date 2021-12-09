@@ -1,9 +1,24 @@
-import React from 'react'
+import React, {useState} from 'react'
+import TopMessage from './components/topMessage'
+import API from './api'
 import Users from './components/users'
 
 
 const App = () => {
-    return <Users />
+    const [users, setUsers] = useState(API.users.fetchAll())
+
+    return (
+        <>
+            <TopMessage value = {users.length} />
+            <Users users = {users} />
+        </>
+    )
+
+
+    // function handleDelete(id) {
+    //     document.getElementById(id).remove()
+    //     setUsers(users.filter(user => user._id !== id))
+    // }
 }
 
 export default App

@@ -1,9 +1,7 @@
 import React from 'react'
 
 
-const Qualities = (props) => {
-    const qualities = props.qualities
-
+const Qualities = ({qualities}) => {
     return (
         <>
             {qualities.map(item => {
