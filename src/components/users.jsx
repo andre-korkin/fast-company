@@ -76,16 +76,16 @@ const Users = () => {
     //     )
     // }
     
-    function renderQualities(qualities) {
-        return (
-            <>
-                {qualities.map(item => {
-                    const bg = 'badge bg-' + item.color + ' m-2'
-                    return <span key={item._id} className={bg}>{item.name}</span>
-                })}
-            </>
-        )
-    }
+    // function renderQualities(qualities) {
+    //     return (
+    //         <>
+    //             {qualities.map(item => {
+    //                 const bg = 'badge bg-' + item.color + ' m-2'
+    //                 return <span key={item._id} className={bg}>{item.name}</span>
+    //             })}
+    //         </>
+    //     )
+    // }
     
     function handleDelete(event) {
         event.target.closest('tr').remove()

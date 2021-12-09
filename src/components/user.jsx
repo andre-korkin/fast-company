@@ -1,11 +1,12 @@
 import React from 'react'
+import Qualities from './qualities'
 
 
 const User = (props) => {
     return (
         <tr>
             <td>{props.name}</td>
-            <td>{}</td>
+            <td>{<Qualities {...props} />}</td>
             <td>{props.profession.name}</td>
             <td>{props.completedMeetings}</td>
             <td>{props.rate}</td>
