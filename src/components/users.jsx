@@ -2,7 +2,7 @@ import React from 'react'
 import User from './user'
 
 
-const Users = ({users, onDelete}) => {
+const Users = ({users, ...rest}) => {
     return (
         <>
             <table className="table table-hover">
@@ -13,11 +13,12 @@ const Users = ({users, onDelete}) => {
                         <th scope="col">Профессия</th>
                         <th scope="col">Встретился, раз</th>
                         <th scope="col">Оценка</th>
+                        <th scope="col">Избранное</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map(user => <User key = {user._id} onDelete = {onDelete} {...user} />)}
+                    {users.map(user => <User key = {user._id} onDelete = {rest.onDelete} {...user} />)}
                 </tbody>
             </table>
         </>
