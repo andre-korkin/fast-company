@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
 import User from './user'
 import Pagination from './pagination'
+import PropTypes from 'prop-types'
 
 
-const Users = ({users, ...rest}) => {
+const Users = ({ users, ...rest }) => {
     const count = users.length
     const pageSize = 4  // количество юзеров на странице
 
     const [currentPage, setCurrentPage] = useState(1)
 
-    let beginIndexUsers = (currentPage - 1) * pageSize  // начальный индекс юзера текущей страницы
-    let lastIndexUsers = beginIndexUsers + pageSize  // конечный индекс юзера текущей страницы + 1
-    let currentUsers = users.slice(beginIndexUsers, lastIndexUsers)  // массив юзеров (вырезка) для текущей страницы
+    const beginIndexUsers = (currentPage - 1) * pageSize  // начальный индекс юзера текущей страницы
+    const lastIndexUsers = beginIndexUsers + pageSize  // конечный индекс юзера текущей страницы + 1
+    const currentUsers = users.slice(beginIndexUsers, lastIndexUsers)  // массив юзеров (вырезка) для текущей страницы
 
     return (
         <>
@@ -36,9 +37,13 @@ const Users = ({users, ...rest}) => {
     )
 
 
-    function handlePageChange(pageIndex) {
+    function handlePageChange (pageIndex) {
         setCurrentPage(pageIndex)
     }
+}
+
+Users.propTypes = {
+    users: PropTypes.array.isRequired
 }
 
 export default Users

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import TopMessage from './components/topMessage'
 import API from './api'
 import Users from './components/users'
@@ -15,7 +15,7 @@ const App = () => {
     )
 
 
-    function handleDelete(id) {
+    function handleDelete (id) {
         setUsers(users.filter(user => user._id !== id))
     }
 }
