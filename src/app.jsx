@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import TopMessage from './components/topMessage'
 import API from './api'
 import Users from './components/users'
 
@@ -7,12 +6,7 @@ import Users from './components/users'
 const App = () => {
     const [users, setUsers] = useState(API.users.fetchAll())
 
-    return (
-        <>
-            <TopMessage value = {users.length} />
-            <Users users = {users} onDelete = {handleDelete} />
-        </>
-    )
+    return <Users users = {users} onDelete = {handleDelete} />
 
 
     function handleDelete (id) {
