@@ -7,12 +7,7 @@ const App = () => {
     const [users, setUsers] = useState()
     useEffect(() => API.users.fetchAll().then(data => setUsers(data)), [])
 
-    if (users) {
-        return <Users users = {users} onDelete = {handleDelete} />
-    }
-    else {
-        return null
-    }
+    return users ? <Users users = {users} onDelete = {handleDelete} /> : null
 
 
     function handleDelete (id) {
