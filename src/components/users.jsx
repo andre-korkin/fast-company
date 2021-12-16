@@ -18,8 +18,7 @@ const Users = ({ users, ...rest }) => {
 
     const [currentPage, setCurrentPage] = useState(1)  // следим за выбранной страницей
 
-    console.log(users[0].profession, users[1].profession, profSelected)
-    const usersFilterProf = profSelected ? users.filter(user => user.profession === profSelected) : users
+    const usersFilterProf = profSelected ? users.filter(user => user.profession._id === profSelected._id) : users
     const count = usersFilterProf.length
 
     const beginIndexUsers = (currentPage - 1) * pageSize  // начальный индекс юзера текущей страницы
