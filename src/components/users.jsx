@@ -18,6 +18,7 @@ const Users = ({ users, ...rest }) => {
 
     const [currentPage, setCurrentPage] = useState(1)  // следим за выбранной страницей
 
+    console.log(users[0].profession, users[1].profession, profSelected)
     const usersFilterProf = profSelected ? users.filter(user => user.profession === profSelected) : users
     const count = usersFilterProf.length
 
