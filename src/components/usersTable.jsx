@@ -6,13 +6,13 @@ import UsersTableBody from './usersTableBody'
 
 const UsersTable = ({ users, onSort, ...rest }) => {
     const cols = [
-        { iter: 'name', name: 'Имя' },
-        { name: 'Качества' },
-        { iter: 'profession.name', name: 'Профессия' },
-        { iter: 'completedMeetings', name: 'Встретился, раз' },
-        { iter: 'rate', name: 'Оценка' },
-        { iter: 'favorites', name: 'Избранное' },
-        {}
+        { name: 'Имя', iter: 'name' },
+        { name: 'Качества', component: 'Qualities' },
+        { name: 'Профессия', iter: 'profession.name' },
+        { name: 'Встретился, раз', iter: 'completedMeetings' },
+        { name: 'Оценка', iter: 'rate' },
+        { name: 'Избранное', iter: 'favorites', component: 'Favorite' },
+        { component: 'Delete' }
     ]
 
     return (
