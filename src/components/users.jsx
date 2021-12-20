@@ -30,22 +30,29 @@ const Users = ({ users, ...rest }) => {
     const lastIndexUsers = beginIndexUsers + pageSize  // конечный индекс юзера текущей страницы + 1
     const currentUsers = usersSorted.slice(beginIndexUsers, lastIndexUsers)  // массив юзеров (вырезка) для текущей страницы
 
+    const statusInit = {}  // Инициализируем объект статусов в избранном/нет для каждого user._id
+    const idList = users.map(user => user._id)
+    for (const id of idList) {
+        statusInit[id] = false
+    }
+    const [status, setStatus] = useState(statusInit)
+
     return (
         <div className='d-flex'>
             {profs && (
                 <div className='d-flex flex-column m-3'>
-                    <GroupList items = {profs} itemSelected = {profSelected} onItemSelect = {handleProfSelect} />
+                    <GroupList items={profs} itemSelected={profSelected} onItemSelect={handleProfSelect} />
                     <button className='btn btn-secondary m-2' onClick={handleRefresh}>Сброс</button>
                 </div>
             )}
 
             <div className='d-flex flex-column m-3'>
-                <TopMessage value = {count} />
+                <TopMessage value={count} />
 
-                <UsersTable users = {currentUsers} onSort = {handleSort} {...rest} />
+                <UsersTable users={currentUsers} onSort={handleSort} status={status} onFavorite={handleFavorite} {...rest} />
 
                 <div className='d-flex justify-content-center m-3'>
-                    <Pagination itemCount = {count} pageSize = {pageSize} currentPage = {currentPage} onPageChange = {handlePageChange} />
+                    <Pagination itemCount={count} pageSize={pageSize} currentPage={currentPage} onPageChange={handlePageChange} />
                 </div>
             </div>
 
@@ -68,6 +75,13 @@ const Users = ({ users, ...rest }) => {
         else {
             setSortBy({ iter: item, order: 'asc' })
         }
+    }
+
+    function handleFavorite (id) {
+        const newStatus = { ...status }
+        newStatus[id] = !status[id]
+        console.log(newStatus)
+        setStatus(newStatus)
     }
 
     function handlePageChange (pageIndex) {

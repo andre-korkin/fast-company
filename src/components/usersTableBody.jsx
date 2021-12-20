@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import Qualities from './qualities'
@@ -6,8 +6,6 @@ import Favorite from './favorite'
 
 
 const UsersTableBody = ({ columns, users, ...rest }) => {
-    const [status, setStatus] = useState(false)
-
     return users.map(user => (
         <tr key={user._id}>
             {columns.map((column, index) => <td key={ index }>{_.get(user, column.iter) || getComponent(user, column.component) }</td>)}
@@ -20,14 +18,10 @@ const UsersTableBody = ({ columns, users, ...rest }) => {
             case 'Qualities':
                 return <Qualities { ...user } />
             case 'Favorite':
-                return <Favorite status = {status} onToggleFavorite = {handleFavorite} />
+                return <Favorite userId={user._id} status={rest.status[user._id]} onFavorite={rest.onFavorite} />
             case 'Delete':
                 return <button type='button' className='btn btn-danger' onClick={() => rest.onDelete(user._id)}>Удалить</button>
         }
-    }
-
-    function handleFavorite (statusValue) {
-        setStatus(!statusValue)
     }
 }
 
