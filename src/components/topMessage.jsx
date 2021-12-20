@@ -8,7 +8,6 @@ const TopMessage = ({ value }) => {
     if (value === 0) {
         message = 'Никто с тобой не тусанет'
         bg = 'badge bg-danger m-2'
-        document.querySelector('.table').style.display = 'none'
     }
     else if (value === 1) {
         message = '1 человек тусанет с тобой сегодня'

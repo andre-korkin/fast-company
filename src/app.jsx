@@ -12,6 +12,7 @@ const App = () => {
 
     function handleDelete (id) {
         setUsers(users.filter(user => user._id !== id))
+        users.length === 1 ? document.querySelector('.table').style.opacity = '0' : document.querySelector('.table').style.opacity = '1'
     }
 }
 

@@ -5,7 +5,7 @@ import Qualities from './qualities'
 import Favorite from './favorite'
 
 
-const UsersTableBody = ({ columns, users }) => {
+const UsersTableBody = ({ columns, users, ...rest }) => {
     const [status, setStatus] = useState(false)
 
     return users.map(user => (
@@ -22,7 +22,7 @@ const UsersTableBody = ({ columns, users }) => {
             case 'Favorite':
                 return <Favorite status = {status} onToggleFavorite = {handleFavorite} />
             case 'Delete':
-                return 'del'
+                return <button type='button' className='btn btn-danger' onClick={() => rest.onDelete(user._id)}>Удалить</button>
         }
     }
 
