@@ -21,7 +21,6 @@ const Users = ({ users, ...rest }) => {
     const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc' })
 
     const usersFilterProf = profSelected ? users.filter(user => user.profession._id === profSelected._id) : users
-
     const usersSorted = _.orderBy(usersFilterProf, [sortBy.iter], [sortBy.order])
 
     const count = usersSorted.length
@@ -80,7 +79,6 @@ const Users = ({ users, ...rest }) => {
     function handleFavorite (id) {
         const newStatus = { ...status }
         newStatus[id] = !status[id]
-        console.log(newStatus)
         setStatus(newStatus)
     }
 
