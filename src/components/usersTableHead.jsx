@@ -23,7 +23,7 @@ const UsersTableHead = ({ columns, onSort }) => {
                 return (
                     <th key={index} onClick={column.iter ? () => handleClick(column.iter) : null} role={column.iter ? 'button' : ''} scope="col">
                         {column.name ? column.name : ''}
-                        {column.iter ? <Caret column={column.iter} dir={direction[column.iter]} /> : ''}
+                        {column.iter ? <Caret dir={direction[column.iter]} /> : ''}
                     </th>
                 )
             })}

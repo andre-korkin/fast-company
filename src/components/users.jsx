@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import Pagination from './pagination'
-import PropTypes from 'prop-types'
 import GroupList from './groupList'
 import API from '../api'
 import TopMessage from './topMessage'
@@ -8,7 +7,10 @@ import UsersTable from './usersTable'
 import _ from 'lodash'
 
 
-const Users = ({ users, ...rest }) => {
+const Users = () => {
+    const [users, setUsers] = useState()
+    useEffect(() => API.users.fetchAll().then(data => setUsers(data)), [])
+
     const pageSize = 2  // количество юзеров на странице
 
     const [profs, setProfs] = useState()  // следим за списком профессий
@@ -20,7 +22,7 @@ const Users = ({ users, ...rest }) => {
     const [currentPage, setCurrentPage] = useState(1)  // следим за выбранной страницей
     const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc' })
 
-    const usersFilterProf = profSelected ? users.filter(user => user.profession._id === profSelected._id) : users
+    const usersFilterProf = users && profSelected ? users.filter(user => user.profession._id === profSelected._id) : users
     const usersSorted = _.orderBy(usersFilterProf, [sortBy.iter], [sortBy.order])
 
     const count = usersSorted.length
@@ -30,9 +32,11 @@ const Users = ({ users, ...rest }) => {
     const currentUsers = usersSorted.slice(beginIndexUsers, lastIndexUsers)  // массив юзеров (вырезка) для текущей страницы
 
     const statusInit = {}  // Инициализируем объект статусов в избранном/нет для каждого user._id
-    const idList = users.map(user => user._id)
-    for (const id of idList) {
-        statusInit[id] = false
+    if (users) {
+        const idList = users.map(user => user._id)
+        for (const id of idList) {
+            statusInit[id] = false
+        }
     }
     const [status, setStatus] = useState(statusInit)
 
@@ -46,9 +50,9 @@ const Users = ({ users, ...rest }) => {
             )}
 
             <div className='d-flex flex-column m-3'>
-                <TopMessage value={count} />
+                {users && <TopMessage value={count} />}
 
-                <UsersTable users={currentUsers} onSort={handleSort} status={status} onFavorite={handleFavorite} {...rest} />
+                {users && <UsersTable users={currentUsers} onSort={handleSort} status={status} onFavorite={handleFavorite} onDelete={handleDelete} />}
 
                 <div className='d-flex justify-content-center m-3'>
                     <Pagination itemCount={count} pageSize={pageSize} currentPage={currentPage} onPageChange={handlePageChange} />
@@ -85,10 +89,11 @@ const Users = ({ users, ...rest }) => {
     function handlePageChange (pageIndex) {
         setCurrentPage(pageIndex)
     }
-}
 
-Users.propTypes = {
-    users: PropTypes.array.isRequired
+    function handleDelete (id) {
+        setUsers(users.filter(user => user._id !== id))
+        users.length === 1 ? document.querySelector('.table').style.opacity = '0' : document.querySelector('.table').style.opacity = '1'
+    }
 }
 
 export default Users

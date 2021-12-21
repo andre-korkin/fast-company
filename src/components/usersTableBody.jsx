@@ -18,7 +18,7 @@ const UsersTableBody = ({ columns, users, ...rest }) => {
             case 'Qualities':
                 return <Qualities { ...user } />
             case 'Favorite':
-                return <Favorite userId={user._id} status={rest.status[user._id]} onFavorite={rest.onFavorite} />
+                return <Favorite userId={user._id} status={rest.status[user._id] || false} onFavorite={rest.onFavorite} />
             case 'Delete':
                 return <button type='button' className='btn btn-danger' onClick={() => rest.onDelete(user._id)}>Удалить</button>
         }
