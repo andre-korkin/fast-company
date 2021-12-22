@@ -1,55 +1,34 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import Caret from './caret'
 
 
-const UsersTableHead = ({ columns, onSort }) => {
-    const dirInit = {}  // Инициализируем объект стрелок по каждой колонке, которая нуждается в сортировке
-    for (const column of columns) {
-        if (column.iter) {
-            if (column.iter === 'name') {  // У первой колонки по умолчанию стрелка видна
-                dirInit[column.iter] = ['up', '1']
-            }
-            else {
-                dirInit[column.iter] = ['up', '0']
-            }
-        }
-    }
-    const [direction] = useState(dirInit)
-
+const UsersTableHead = ({ columns, selectedSort, onSort }) => {
     return (
         <tr>
-            {columns.map((column, index) => {
+            {Object.keys(columns).map((column) => {
                 return (
-                    <th key={index} onClick={column.iter ? () => handleClick(column.iter) : null} role={column.iter ? 'button' : ''} scope="col">
-                        {column.name ? column.name : ''}
-                        {column.iter ? <Caret dir={direction[column.iter]} /> : ''}
-                    </th>
+                  <th
+                    key={column}
+                    onClick={
+                        columns[column].iter
+                          ? () => handleClick(columns[column].iter)
+                          : null
+                    }
+                    {...{ role: columns[column].iter && "button" }}
+                    scope="col"
+                  >
+                      {columns[column].name ? columns[column].name  : ''}{' '}
+                      {selectedSort.iter === columns[column].iter && (
+                        <i className={`bi bi-caret-${selectedSort.icon}-fill`}></i>
+                      )}
+                  </th>
                 )
             })}
         </tr>
     )
 
-
-    function handleClick (iter) {
-        onSort(iter)
-        Object.keys(direction).forEach(col => {
-            if (col !== iter) {
-                direction[col] = ['up', '0']
-            }
-        })
-
-        if (direction[iter][1] === '0') {
-            direction[iter] = ['up', '1']
-        }
-        else {
-            if (direction[iter][0] === 'up') {
-                direction[iter][0] = 'down'
-            }
-            else {
-                direction[iter][0] = 'up'
-            }
-        }
+    function handleClick(iter) {
+        onSort(iter);
     }
 }
 

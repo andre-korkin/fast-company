@@ -11,7 +11,7 @@ const Users = () => {
     const [users, setUsers] = useState()
     useEffect(() => API.users.fetchAll().then(data => setUsers(data)), [])
 
-    const pageSize = 2  // количество юзеров на странице
+    const pageSize = 5  // количество юзеров на странице
 
     const [profs, setProfs] = useState()  // следим за списком профессий
     const [profSelected, setProfSelected] = useState()  // следим за выбранной профессией
@@ -20,7 +20,7 @@ const Users = () => {
     useEffect(() => setCurrentPage(1), [profSelected])
 
     const [currentPage, setCurrentPage] = useState(1)  // следим за выбранной страницей
-    const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc' })
+    const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc', icon: 'up' }) // для более простого добавления иконки стрелки
 
     const usersFilterProf = users && profSelected ? users.filter(user => user.profession._id === profSelected._id) : users
     const usersSorted = _.orderBy(usersFilterProf, [sortBy.iter], [sortBy.order])
@@ -38,7 +38,6 @@ const Users = () => {
             statusInit[id] = false
         }
     }
-    const [status, setStatus] = useState(statusInit)
 
     return (
         <div className='d-flex'>
@@ -52,7 +51,7 @@ const Users = () => {
             <div className='d-flex flex-column m-3'>
                 {users && <TopMessage value={count} />}
 
-                {users && <UsersTable users={currentUsers} onSort={handleSort} status={status} onFavorite={handleFavorite} onDelete={handleDelete} />}
+                {users && <UsersTable users={currentUsers} onSort={handleSort} selectedSort={sortBy} onFavorite={handleFavorite} onDelete={handleDelete} />}
 
                 <div className='d-flex justify-content-center m-3'>
                     <Pagination itemCount={count} pageSize={pageSize} currentPage={currentPage} onPageChange={handlePageChange} />
@@ -73,17 +72,24 @@ const Users = () => {
 
     function handleSort (item) {
         if (sortBy.iter === item) {
-            sortBy.order === 'asc' ? setSortBy({ iter: item, order: 'desc' }) : setSortBy({ iter: item, order: 'asc' })
-        }
-        else {
-            setSortBy({ iter: item, order: 'asc' })
+            setSortBy({
+                ...sortBy,
+                order: sortBy.order === "asc" ? "desc" : "asc",
+                icon: sortBy.icon === "up" ? "down" : "up"
+            });
+        } else {
+            setSortBy({ iter: item, order: "asc", icon: "up" });
         }
     }
 
     function handleFavorite (id) {
-        const newStatus = { ...status }
-        newStatus[id] = !status[id]
-        setStatus(newStatus)
+        const newArray = users.map((user) => {
+            if (user._id === id) {
+                return { ...user, favorite: !user.favorite };
+            }
+            return user;
+        });
+        setUsers(newArray);
     }
 
     function handlePageChange (pageIndex) {
