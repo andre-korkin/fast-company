@@ -39,6 +39,9 @@ const Users = () => {
         }
     }
     const [status, setStatus] = useState(statusInit)
+    // const [changeFavorite, setChangeFavoite] = useState(false)
+
+    // const usersFilterFav = users && changeFavorite ? users.filter(user => status[user._id] === true) : users
 
     return (
         <div className='d-flex'>
@@ -72,6 +75,7 @@ const Users = () => {
     }
 
     function handleSort (item) {
+        setCurrentPage(1)
         if (sortBy.iter === item) {
             sortBy.order === 'asc' ? setSortBy({ iter: item, order: 'desc' }) : setSortBy({ iter: item, order: 'asc' })
         }
