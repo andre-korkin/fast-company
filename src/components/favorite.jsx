@@ -2,17 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 
-const Favorite = ({ userId, status, onFavorite }) => {
+const Favorite = ({ user, onFavorite }) => {
     return (
-        <button className="btn btn-light" onClick={() => onFavorite(userId)}>
-            <i className={status ? 'bi bi-heart-fill' : 'bi bi-heart'}></i>
+        <button className="btn btn-light" onClick={() => onFavorite(user._id)}>
+            <i className={user.favorite ? 'bi bi-heart-fill' : 'bi bi-heart'}></i>
         </button>
     )
 }
 
 Favorite.propTypes = {
-    userId: PropTypes.string.isRequired,
-    status: PropTypes.bool.isRequired,
+    user: PropTypes.object.isRequired,
     onFavorite: PropTypes.func.isRequired
 }
 

@@ -9,7 +9,10 @@ import _ from 'lodash'
 
 const Users = () => {
     const [users, setUsers] = useState()
-    useEffect(() => API.users.fetchAll().then(data => setUsers(data)), [])
+    useEffect(() => API.users.fetchAll().then(data => setUsers(data.map(user => {
+        user.favorite = false
+        return user
+    }))), [])
 
     const pageSize = 2  // количество юзеров на странице
 
@@ -31,18 +34,6 @@ const Users = () => {
     const lastIndexUsers = beginIndexUsers + pageSize  // конечный индекс юзера текущей страницы + 1
     const currentUsers = usersSorted.slice(beginIndexUsers, lastIndexUsers)  // массив юзеров (вырезка) для текущей страницы
 
-    const statusInit = {}  // Инициализируем объект статусов в избранном/нет для каждого user._id
-    if (users) {
-        const idList = users.map(user => user._id)
-        for (const id of idList) {
-            statusInit[id] = false
-        }
-    }
-    const [status, setStatus] = useState(statusInit)
-    // const [changeFavorite, setChangeFavoite] = useState(false)
-
-    // const usersFilterFav = users && changeFavorite ? users.filter(user => status[user._id] === true) : users
-
     return (
         <div className='d-flex'>
             {profs && (
@@ -55,7 +46,7 @@ const Users = () => {
             <div className='d-flex flex-column m-3'>
                 {users && <TopMessage value={count} />}
 
-                {users && <UsersTable users={currentUsers} onSort={handleSort} status={status} onFavorite={handleFavorite} onDelete={handleDelete} />}
+                {users && <UsersTable users={currentUsers} onSort={handleSort} onFavorite={handleFavorite} onDelete={handleDelete} />}
 
                 <div className='d-flex justify-content-center m-3'>
                     <Pagination itemCount={count} pageSize={pageSize} currentPage={currentPage} onPageChange={handlePageChange} />
@@ -85,9 +76,13 @@ const Users = () => {
     }
 
     function handleFavorite (id) {
-        const newStatus = { ...status }
-        newStatus[id] = !status[id]
-        setStatus(newStatus)
+        const newArray = users.map(user => {
+            if (user._id === id) {
+                return { ...user, favorite: !user.favorite }
+            }
+            return user
+        })
+        setUsers(newArray)
     }
 
     function handlePageChange (pageIndex) {

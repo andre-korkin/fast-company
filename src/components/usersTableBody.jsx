@@ -8,7 +8,7 @@ import Favorite from './favorite'
 const UsersTableBody = ({ columns, users, ...rest }) => {
     return users.map(user => (
         <tr key={user._id}>
-            {columns.map((column, index) => <td key={ index }>{_.get(user, column.iter) || getComponent(user, column.component) }</td>)}
+            {columns.map((column, index) => <td key={ index }>{column.component ? getComponent(user, column.component) : _.get(user, column.iter)}</td>)}
         </tr>
     ))
 
@@ -18,7 +18,7 @@ const UsersTableBody = ({ columns, users, ...rest }) => {
             case 'Qualities':
                 return <Qualities { ...user } />
             case 'Favorite':
-                return <Favorite userId={user._id} status={rest.status[user._id] || false} onFavorite={rest.onFavorite} />
+                return <Favorite user={user} onFavorite={rest.onFavorite} />
             case 'Delete':
                 return <button type='button' className='btn btn-danger' onClick={() => rest.onDelete(user._id)}>Удалить</button>
         }

@@ -11,7 +11,7 @@ const UsersTable = ({ users, onSort, ...rest }) => {
         { name: 'Профессия', iter: 'profession.name' },
         { name: 'Встретился, раз', iter: 'completedMeetings' },
         { name: 'Оценка', iter: 'rate' },
-        { name: 'Избранное', iter: 'favorites', component: 'Favorite' },
+        { name: 'Избранное', iter: 'favorite', component: 'Favorite' },
         { component: 'Delete' }
     ]
 
