@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 
 const UserLink = ({ user }) => {
-    return <Link className='btn link' to={`/users/${user._id}`}>{user.name}</Link>
+    return <Link className='btn' style={{ color: '#0d6efd' }} to={`/users/${user._id}`}>{user.name}</Link>
 }
 
 UserLink.propTypes = {
