@@ -6,7 +6,7 @@ import UsersTableBody from './usersTableBody'
 
 const UsersTable = ({ users, onSort, ...rest }) => {
     const cols = [
-        { name: 'Имя', iter: 'name' },
+        { name: 'Имя', iter: 'name', component: 'UserLink' },
         { name: 'Качества', component: 'Qualities' },
         { name: 'Профессия', iter: 'profession.name' },
         { name: 'Встретился, раз', iter: 'completedMeetings' },

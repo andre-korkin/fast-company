@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
+import UserLink from './userLink'
 import Qualities from './qualities'
 import Favorite from './favorite'
 
@@ -15,6 +16,8 @@ const UsersTableBody = ({ columns, users, ...rest }) => {
 
     function getComponent (user, component) {
         switch (component) {
+            case 'UserLink':
+                return <UserLink user={user} />
             case 'Qualities':
                 return <Qualities { ...user } />
             case 'Favorite':
