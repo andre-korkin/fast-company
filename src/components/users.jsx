@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import User from './user'
 import Pagination from './pagination'
-import PropTypes from 'prop-types'
 import GroupList from './groupList'
 import API from '../api'
 import TopMessage from './topMessage'
+import UsersTable from './usersTable'
+import _ from 'lodash'
 
 
-const Users = ({ users, ...rest }) => {
+const Users = () => {
+    const [users, setUsers] = useState()
+    useEffect(() => API.users.fetchAll().then(data => setUsers(data.map(user => {
+        user.favorite = false
+        return user
+    }))), [])
+
     const pageSize = 2  // количество юзеров на странице
 
     const [profs, setProfs] = useState()  // следим за списком профессий
@@ -17,45 +23,33 @@ const Users = ({ users, ...rest }) => {
     useEffect(() => setCurrentPage(1), [profSelected])
 
     const [currentPage, setCurrentPage] = useState(1)  // следим за выбранной страницей
+    const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc' })
 
-    const usersFilterProf = profSelected ? users.filter(user => user.profession === profSelected) : users
-    const count = usersFilterProf.length
+    const usersFilterProf = users && profSelected ? users.filter(user => user.profession._id === profSelected._id) : users
+    const usersSorted = _.orderBy(usersFilterProf, [sortBy.iter], [sortBy.order])
+
+    const count = usersSorted.length
 
     const beginIndexUsers = (currentPage - 1) * pageSize  // начальный индекс юзера текущей страницы
     const lastIndexUsers = beginIndexUsers + pageSize  // конечный индекс юзера текущей страницы + 1
-    const currentUsers = usersFilterProf.slice(beginIndexUsers, lastIndexUsers)  // массив юзеров (вырезка) для текущей страницы
+    const currentUsers = usersSorted.slice(beginIndexUsers, lastIndexUsers)  // массив юзеров (вырезка) для текущей страницы
 
     return (
         <div className='d-flex'>
             {profs && (
                 <div className='d-flex flex-column m-3'>
-                    <GroupList items = {profs} itemSelected = {profSelected} onItemSelect = {handleProfSelect} />
+                    <GroupList items={profs} itemSelected={profSelected} onItemSelect={handleProfSelect} />
                     <button className='btn btn-secondary m-2' onClick={handleRefresh}>Сброс</button>
                 </div>
             )}
 
             <div className='d-flex flex-column m-3'>
-                <TopMessage value = {count} />
+                {users && <TopMessage value={count} />}
 
-                <table className="table table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Имя</th>
-                            <th scope="col">Качества</th>
-                            <th scope="col">Профессия</th>
-                            <th scope="col">Встретился, раз</th>
-                            <th scope="col">Оценка</th>
-                            <th scope="col">Избранное</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {currentUsers.map(user => <User key = {user._id} onDelete = {rest.onDelete} {...user} />)}
-                    </tbody>
-                </table>
+                {users && <UsersTable users={currentUsers} onSort={handleSort} onFavorite={handleFavorite} onDelete={handleDelete} />}
 
                 <div className='d-flex justify-content-center m-3'>
-                    <Pagination itemCount = {count} pageSize = {pageSize} currentPage = {currentPage} onPageChange = {handlePageChange} />
+                    <Pagination itemCount={count} pageSize={pageSize} currentPage={currentPage} onPageChange={handlePageChange} />
                 </div>
             </div>
 
@@ -71,13 +65,34 @@ const Users = ({ users, ...rest }) => {
         setProfSelected(undefined)
     }
 
+    function handleSort (item) {
+        setCurrentPage(1)
+        if (sortBy.iter === item) {
+            sortBy.order === 'asc' ? setSortBy({ iter: item, order: 'desc' }) : setSortBy({ iter: item, order: 'asc' })
+        }
+        else {
+            setSortBy({ iter: item, order: 'asc' })
+        }
+    }
+
+    function handleFavorite (id) {
+        const newArray = users.map(user => {
+            if (user._id === id) {
+                return { ...user, favorite: !user.favorite }
+            }
+            return user
+        })
+        setUsers(newArray)
+    }
+
     function handlePageChange (pageIndex) {
         setCurrentPage(pageIndex)
     }
-}
 
-Users.propTypes = {
-    users: PropTypes.array.isRequired
+    function handleDelete (id) {
+        setUsers(users.filter(user => user._id !== id))
+        users.length === 1 ? document.querySelector('.table').style.opacity = '0' : document.querySelector('.table').style.opacity = '1'
+    }
 }
 
 export default Users
