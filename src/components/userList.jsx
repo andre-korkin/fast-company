@@ -34,7 +34,7 @@ const UserList = () => {
     const lastIndexUsers = beginIndexUsers + pageSize  // конечный индекс юзера текущей страницы + 1
     const currentUsers = usersSorted.slice(beginIndexUsers, lastIndexUsers)  // массив юзеров (вырезка) для текущей страницы
 
-    return (
+    const usersData = users && (
         <div className='d-flex'>
             {profs && (
                 <div className='d-flex flex-column m-3'>
@@ -55,6 +55,8 @@ const UserList = () => {
 
         </div>
     )
+
+    return users ? usersData : 'Loading data...'
 
 
     function handleProfSelect (prof) {

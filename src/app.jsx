@@ -1,9 +1,9 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import NavBar from './components/navbar'
-import Home from './components/home'
-import Users from './components/users'
-import LogIn from './components/login'
+import Home from './layout/home'
+import Users from './layout/users'
+import LogIn from './layout/login'
 import Error404 from './components/error404'
 
 

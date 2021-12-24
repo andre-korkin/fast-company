@@ -23,7 +23,7 @@ const User = ({ id }) => {
         </>
     )
 
-    return user ? userData : null
+    return user ? userData : 'Loading data...'
 
 
     function handleSave () {

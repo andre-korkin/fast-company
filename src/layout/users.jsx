@@ -1,6 +1,6 @@
 import React from 'react'
-import UserList from './userList'
-import User from './user'
+import UserList from '../components/userList'
+import User from '../components/user'
 import { useParams } from 'react-router-dom'
 
 
