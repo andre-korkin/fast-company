@@ -19,14 +19,19 @@ const UserList = () => {
     const [profs, setProfs] = useState()  // следим за списком профессий
     const [profSelected, setProfSelected] = useState()  // следим за выбранной профессией
 
+    const [search, setSearch] = useState('')  // следим за полем поиска
+
     useEffect(() => API.professions.fetchAll().then(data => setProfs(data)), [])
     useEffect(() => setCurrentPage(1), [profSelected])
+    useEffect(() => setCurrentPage(1), [search])
 
     const [currentPage, setCurrentPage] = useState(1)  // следим за выбранной страницей
     const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc' })
 
     const usersFilterProf = users && profSelected ? users.filter(user => user.profession._id === profSelected._id) : users
-    const usersSorted = _.orderBy(usersFilterProf, [sortBy.iter], [sortBy.order])
+    const usersFilterSearch = users && search ? users.filter(user => user.name.toLowerCase().includes(search.toLocaleLowerCase())) : users
+    const usersFilter = users && usersFilterProf.length < usersFilterSearch.length ? usersFilterProf : usersFilterSearch
+    const usersSorted = _.orderBy(usersFilter, [sortBy.iter], [sortBy.order])
 
     const count = usersSorted.length
 
@@ -46,6 +51,8 @@ const UserList = () => {
             <div className='d-flex flex-column m-3'>
                 {users && <TopMessage value={count} />}
 
+                <input type='text' placeholder='Поиск...' value={search} onChange={handleSearch} className='form-control m-2 mb-4' />
+
                 {users && <UsersTable users={currentUsers} onSort={handleSort} onFavorite={handleFavorite} onDelete={handleDelete} />}
 
                 <div className='d-flex justify-content-center m-3'>
@@ -60,11 +67,17 @@ const UserList = () => {
 
 
     function handleProfSelect (prof) {
+        setSearch('')
         setProfSelected(prof)
     }
 
     function handleRefresh () {
         setProfSelected(undefined)
+    }
+
+    function handleSearch (event) {
+        setProfSelected(undefined)
+        setSearch(event.target.value)
     }
 
     function handleSort (item) {
