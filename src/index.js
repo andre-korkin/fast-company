@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.css'
-import reportWebVitals from './reportWebVitals'
 import App from './app'
 
 
@@ -14,5 +13,3 @@ ReactDOM.render(
     </React.StrictMode>,
     document.getElementById('root')
 )
-
-reportWebVitals()
