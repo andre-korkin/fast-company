@@ -3,7 +3,7 @@ import Pagination from '../../common/pagination'
 import GroupList from '../../common/groupList'
 import API from '../../../api'
 import TopMessage from '../../ui/topMessage'
-import UsersTable from '../../ui/table/usersTable'
+import UsersTable from '../../ui/usersTable'
 import _ from 'lodash'
 
 

@@ -3,7 +3,7 @@ import TextField from '../common/textField'
 import { validator } from '../../utils/validator'
 
 
-const LoginForm = () => {
+const RegisterForm = () => {
     const [data, setData] = useState({ email: '', password: '' })
     const [errors, setErrors] = useState({})
 
@@ -29,11 +29,11 @@ const LoginForm = () => {
 
     return (
         <>
-            <h3 className='mb-4'>Login</h3>
+            <h3 className='mb-4'>Register</h3>
             <form onSubmit={handleSubmit}>
                 <TextField label='Email' name='email' value={data.email} errors={errors.email} onChange={handleChange} />
                 <TextField label='Пароль' type='password' name='password' value={data.password} errors={errors.password} onChange={handleChange} />
-                <button className='btn btn-primary w-100 mx-auto' disabled={Object.values(errors).join('').trim() !== ''}>Войти</button>
+                <button className='btn btn-primary w-100 mx-auto' disabled={Object.values(errors).join('').trim() !== ''}>Зарегистрироваться</button>
             </form>
         </>
     )
@@ -54,4 +54,4 @@ const LoginForm = () => {
     }
 }
 
-export default LoginForm
+export default RegisterForm
