@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import API from '../api'
-import Qualities from './qualities'
+import API from '../../../api'
+import Qualities from '../../ui/qualities'
 import PropTypes from 'prop-types'
 
 

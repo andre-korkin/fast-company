@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import Pagination from './pagination'
-import GroupList from './groupList'
-import API from '../api'
-import TopMessage from './topMessage'
-import UsersTable from './usersTable'
+import Pagination from '../../common/pagination'
+import GroupList from '../../common/groupList'
+import API from '../../../api'
+import TopMessage from '../../ui/topMessage'
+import UsersTable from '../../ui/table/usersTable'
 import _ from 'lodash'
 
 

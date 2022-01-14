@@ -1,10 +1,10 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import NavBar from './components/navbar'
+import NavBar from './components/ui/navbar'
 import Home from './layout/home'
 import Users from './layout/users'
 import LogIn from './layout/login'
-import Error404 from './components/error404'
+import Error404 from './components/page/error404'
 
 
 const App = () => {
