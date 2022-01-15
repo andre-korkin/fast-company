@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import TextField from '../common/textField'
+import TextField from '../common/form/textField'
 import { validator } from '../../utils/validator'
 import API from '../../api'
-import SelectField from '../common/selectField'
+import SelectField from '../common/form/selectField'
+import RadioField from '../common/form/radioField'
 
 
 const RegisterForm = () => {
@@ -35,6 +36,11 @@ const RegisterForm = () => {
         validate()
     }, [data])
 
+    const sex = [
+        { value: 'Мужской' },
+        { value: 'Женский' }
+    ]
+
     return (
         <>
             <h3 className='mb-4'>Register</h3>
@@ -42,16 +48,7 @@ const RegisterForm = () => {
                 <TextField label='Email' name='email' value={data.email} errors={errors.email} onChange={handleChange} />
                 <TextField label='Пароль' type='password' name='password' value={data.password} errors={errors.password} onChange={handleChange} />
                 {profs && <SelectField label='Профессия' name='profession' value={data.profession} data={profs} errors={errors.profession} onChange={handleChange} />}
-                {/* <div className="mb-5">
-                    <label htmlFor="validationCustom04" className="form-label">Профессия</label>
-                    <select className="form-select" id="validationCustom04" name='profession' value={data.profession} errors={errors.profession} onChange={handleChange}>
-                        <option disabled value=''>Выбрать...</option>
-                        {profs && profs.map(prof => <option key={prof._id} value={prof._id}>{prof.name}</option>)}
-                    </select>
-                    <div className="invalid-feedback">
-                        Необходимо указать профессию.
-                    </div>
-                </div> */}
+                <RadioField label='Пол' name='sex' options={sex} onChange={handleChange} />
                 <button className='btn btn-primary w-100 mx-auto' disabled={Object.values(errors).join('').trim() !== ''}>Зарегистрироваться</button>
             </form>
         </>

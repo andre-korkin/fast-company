@@ -6,7 +6,7 @@ const SelectField = ({ label, name, data, errors, onChange }) => {
     const getInpClass = () => errors === undefined || errors.length === 0 ? 'form-select' : 'form-select is-invalid'
 
     return (
-        <div className='mb-5'>
+        <div className='mb-4'>
             <label htmlFor={name}>{label}</label>
             <div className="input-group has-validation">
                 <select id={name} name={name} value='' errors={errors.profession} onChange={onChange} className={getInpClass()}>

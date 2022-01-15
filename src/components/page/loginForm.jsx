@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import TextField from '../common/textField'
+import TextField from '../common/form/textField'
 import { validator } from '../../utils/validator'
 
 
