@@ -9,7 +9,7 @@ const TextField = ({ label, type, name, value, errors, onChange }) => {
 
     return (
         <div className='mb-4'>
-            <label htmlFor={name}>{label}</label>
+            <label htmlFor={name} className='mb-2'>{label}</label>
             <div className="input-group has-validation">
                 <input type={showPass ? 'text' : type} id={name} name={name} value={value} onChange={onChange} className={getInpClass()} />
                 {type === 'password' && (

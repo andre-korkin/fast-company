@@ -4,14 +4,25 @@ import { validator } from '../../utils/validator'
 import API from '../../api'
 import SelectField from '../common/form/selectField'
 import RadioField from '../common/form/radioField'
+import MultiSelectField from '../common/form/multiSelectField'
 
 
 const RegisterForm = () => {
-    const [data, setData] = useState({ email: '', password: '', profession: '' })
+    const [data, setData] = useState({ email: '', password: '', profession: '', sex: '1', qualities: [] })
     const [errors, setErrors] = useState({})
 
     const [profs, setProfs] = useState()
-    useEffect(() => API.professions.fetchAll().then(data => setProfs(data)), [])
+    const [quals, setQuals] = useState()
+
+    useEffect(() => {
+        API.professions.fetchAll().then(data => setProfs(data))
+        API.qualities.fetchAll().then(data => setQuals(data))
+    }, [])
+
+    const sex = [
+        { value: '1', name: 'Мужской' },
+        { value: '2', name: 'Женский' }
+    ]
 
     const validatorConfig = {
         email: {
@@ -36,11 +47,6 @@ const RegisterForm = () => {
         validate()
     }, [data])
 
-    const sex = [
-        { value: 'Мужской' },
-        { value: 'Женский' }
-    ]
-
     return (
         <>
             <h3 className='mb-4'>Register</h3>
@@ -48,7 +54,8 @@ const RegisterForm = () => {
                 <TextField label='Email' name='email' value={data.email} errors={errors.email} onChange={handleChange} />
                 <TextField label='Пароль' type='password' name='password' value={data.password} errors={errors.password} onChange={handleChange} />
                 {profs && <SelectField label='Профессия' name='profession' value={data.profession} data={profs} errors={errors.profession} onChange={handleChange} />}
-                <RadioField label='Пол' name='sex' options={sex} onChange={handleChange} />
+                <RadioField label='Пол' name='sex' value={data.sex} options={sex} onChange={handleChange} />
+                {quals && <MultiSelectField label='Качества' name='qualities' value={data.qualities} data={quals} onChange={handleChange} />}
                 <button className='btn btn-primary w-100 mx-auto' disabled={Object.values(errors).join('').trim() !== ''}>Зарегистрироваться</button>
             </form>
         </>
