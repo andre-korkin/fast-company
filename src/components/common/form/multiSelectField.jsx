@@ -14,7 +14,8 @@ const MultiSelectField = ({ label, name, value, data, onChange }) => {
     return (
         <div className='mb-4'>
             <label htmlFor={name} className='mb-2'>{label}</label>
-            <Select isMulti name={name} defaultValue={value} options={qualities} className='basic-multi-select' classNamePrefix='select' />
+            <Select isMulti name={name} defaultValue={value} options={qualities}
+                className='basic-multi-select' classNamePrefix='select' onChange={event => onChange(event, name)} />
         </div>
     )
 }

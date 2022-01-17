@@ -69,8 +69,20 @@ const RegisterForm = () => {
     )
 
 
-    function handleChange ({ target }) {
-        setData((prevState) => ({ ...prevState, [target.name]: target.value }))
+    function handleChange (event, name = undefined) {
+        if (Array.isArray(event)) {
+            setData((prevState) => ({ ...prevState, [name]: event }))
+        }
+        else {
+            const target = event.target
+
+            if (target.type === 'checkbox') {
+                setData((prevState) => ({ ...prevState, [target.name]: !data[target.name] }))
+            }
+            else {
+                setData((prevState) => ({ ...prevState, [target.name]: target.value }))
+            }
+        }
     }
 
     function handleSubmit (event) {

@@ -5,10 +5,10 @@ import PropTypes from 'prop-types'
 const CheckField = ({ label, name, isCheck, errors, onChange }) => {
     return (
         <div className='mb-4'>
-            <div className="form-check has-validation">
+            <div className="form-check">
                 <input type='checkbox' id={name} name={name} checked={isCheck} onChange={onChange} className='form-check-input' />
                 <label htmlFor={name} className='form-check-label'>{label}</label>
-                {errors && <div className='invalid-feedback'>{errors[0]}</div>}
+                {errors && <div className='invalid-feedback' style={{ display: 'block' }}>{errors[0]}</div>}
             </div>
         </div>
     )
