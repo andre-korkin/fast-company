@@ -5,10 +5,11 @@ import API from '../../api'
 import SelectField from '../common/form/selectField'
 import RadioField from '../common/form/radioField'
 import MultiSelectField from '../common/form/multiSelectField'
+import CheckField from '../common/form/checkField'
 
 
 const RegisterForm = () => {
-    const [data, setData] = useState({ email: '', password: '', profession: '', sex: '1', qualities: [] })
+    const [data, setData] = useState({ email: '', password: '', profession: '', sex: '1', qualities: [], license: true })
     const [errors, setErrors] = useState({})
 
     const [profs, setProfs] = useState()
@@ -23,6 +24,8 @@ const RegisterForm = () => {
         { value: '1', name: 'Мужской' },
         { value: '2', name: 'Женский' }
     ]
+
+    const licenseLink = <span>Подтверждаю согласие с <a role='button' className='primary'>лицензионным соглашением</a></span>
 
     const validatorConfig = {
         email: {
@@ -40,6 +43,9 @@ const RegisterForm = () => {
         },
         profession: {
             isRequired: { message: 'Необходимо указать профессию' }
+        },
+        license: {
+            isRequired: { message: 'Необходимо подтвердить согласие с лицензионным соглашением' }
         }
     }
 
@@ -56,6 +62,7 @@ const RegisterForm = () => {
                 {profs && <SelectField label='Профессия' name='profession' value={data.profession} data={profs} errors={errors.profession} onChange={handleChange} />}
                 <RadioField label='Пол' name='sex' value={data.sex} options={sex} onChange={handleChange} />
                 {quals && <MultiSelectField label='Качества' name='qualities' value={data.qualities} data={quals} onChange={handleChange} />}
+                <CheckField label={licenseLink} name='license' isCheck={data.license} errors={errors.license} onChange={handleChange} />
                 <button className='btn btn-primary w-100 mx-auto' disabled={Object.values(errors).join('').trim() !== ''}>Зарегистрироваться</button>
             </form>
         </>
