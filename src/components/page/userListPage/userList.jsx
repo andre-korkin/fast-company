@@ -9,10 +9,7 @@ import _ from 'lodash'
 
 const UserList = () => {
     const [users, setUsers] = useState()
-    useEffect(() => API.users.fetchAll().then(data => setUsers(data.map(user => {
-        user.favorite = false
-        return user
-    }))), [])
+    useEffect(() => API.users.fetchAll().then(data => setUsers(data)), [])
 
     const pageSize = 2  // количество юзеров на странице
 
@@ -97,6 +94,7 @@ const UserList = () => {
             }
             return user
         })
+        localStorage.setItem('users', JSON.stringify(newArray))
         setUsers(newArray)
     }
 
@@ -105,7 +103,9 @@ const UserList = () => {
     }
 
     function handleDelete (id) {
-        setUsers(users.filter(user => user._id !== id))
+        const newArray = users.filter(user => user._id !== id)
+        localStorage.setItem('users', JSON.stringify(newArray))
+        setUsers(newArray)
         users.length === 1 ? document.querySelector('.table').style.opacity = '0' : document.querySelector('.table').style.opacity = '1'
     }
 }
