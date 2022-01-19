@@ -13,7 +13,7 @@ const App = () => {
             <NavBar />
             <Switch>
                 <Route path='/' exact component={Home} />
-                <Route path='/users/:userId?' component={Users} />
+                <Route path='/users/:userId?/:userEdit?' component={Users} />
                 <Route path='/login/:reg?' component={LogIn} />
                 <Route path='/404' component={Error404} />
 

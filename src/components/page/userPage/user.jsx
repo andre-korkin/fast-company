@@ -44,7 +44,7 @@ const User = ({ id }) => {
     }
 
     function handleEdit () {
-        history.push('/users')
+        history.push(`/users/${user._id}/edit`)
     }
 
     function handleDelete () {
