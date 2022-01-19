@@ -21,8 +21,8 @@ const RegisterForm = () => {
     }, [])
 
     const sex = [
-        { value: '1', name: 'Мужской' },
-        { value: '2', name: 'Женский' }
+        { value: '1', name: 'мужской' },
+        { value: '2', name: 'женский' }
     ]
 
     const licenseLink = <span>Подтверждаю согласие с <a role='button' className='primary'>лицензионным соглашением</a></span>
@@ -61,7 +61,7 @@ const RegisterForm = () => {
                 <TextField label='Пароль' type='password' name='password' value={data.password} errors={errors.password} onChange={handleChange} />
                 {profs && <SelectField label='Профессия' name='profession' value={data.profession} data={profs} errors={errors.profession} onChange={handleChange} />}
                 <RadioField label='Пол' name='sex' value={data.sex} options={sex} onChange={handleChange} />
-                {quals && <MultiSelectField label='Качества' name='qualities' value={data.qualities} data={quals} onChange={handleChange} />}
+                {quals && <MultiSelectField label='Качества' name='qualities' values={data.qualities} data={quals} onChange={handleChange} />}
                 <CheckField label={licenseLink} name='license' isCheck={data.license} errors={errors.license} onChange={handleChange} />
                 <button className='btn btn-primary w-100 mx-auto' disabled={Object.values(errors).join('').trim() !== ''}>Зарегистрироваться</button>
             </form>

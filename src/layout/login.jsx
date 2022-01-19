@@ -15,11 +15,11 @@ const LogIn = () => {
                     {formType === 'register'
                         ? <>
                             <RegisterForm />
-                            <div className='mt-4'>Нет аккаунта? <a role='button' onClick={toggleFormType} className='primary'>Зарегистрируйтесь</a></div>
+                            <div className='mt-4'>Есть аккаунт? <a role='button' onClick={toggleFormType} className='primary'>Войдите</a></div>
                         </>
                         : <>
                             <LoginForm />
-                            <div className='mt-4'>Есть аккаунт? <a role='button' onClick={toggleFormType} className='primary'>Войдите</a></div>
+                            <div className='mt-4'>Нет аккаунта? <a role='button' onClick={toggleFormType} className='primary'>Зарегистрируйтесь</a></div>
                         </>}
                 </div>
             </div>
