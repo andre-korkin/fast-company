@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import TextField from '../common/form/textField'
 import { validator } from '../../utils/validator'
 import API from '../../api'
@@ -9,6 +10,8 @@ import PropTypes from 'prop-types'
 
 
 const UserEditForm = ({ id }) => {
+    const history = useHistory()
+
     const [data, setData] = useState()
     useEffect(() => API.users.getById(id).then(user => setData(user)), [])
 
@@ -85,7 +88,13 @@ const UserEditForm = ({ id }) => {
 
     function handleSave (event) {
         event.preventDefault()
-        console.log(data)
+
+        const users = JSON.parse(localStorage.getItem('users'))
+        const userIndex = users.findIndex(user => user._id === id)
+
+        users[userIndex] = { ...data }
+        localStorage.setItem('users', JSON.stringify(users))
+        history.push(`/users/${id}`)
     }
 
     function validate () {
